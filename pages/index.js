@@ -103,7 +103,7 @@ export default function Home({ banners, landing }) {
       router.events.off("routeChangeStart", (_) => setLoading(true));
       router.events.off("routeChangeComplete", (_) => setLoading(false));
     };
-  }, []);
+  }, [router.events]);
 
   return (
     <div className="relative" ref={main}>

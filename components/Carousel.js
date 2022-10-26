@@ -19,7 +19,7 @@ const Carousel = ({ images }) => {
       router.events.off("routeChangeStart", (_) => setLoading(true));
       router.events.off("routeChangeComplete", (_) => setLoading(false));
     };
-  }, [currentIndex]);
+  }, [router.events]);
 
   const handleNext = () => {
     setCurrentIndex((index) =>
