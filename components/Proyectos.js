@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNextSanityImage } from "next-sanity-image";
 import { client } from "../lib/client";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const getPictureWidth = (width) => {
   if (width > 1440) {
@@ -16,12 +17,15 @@ const getPictureWidth = (width) => {
 const Proyectos = ({ proyecto, windowDimensions }) => {
   const imageProps = useNextSanityImage(client, proyecto.image);
 
+  const router = useRouter();
+
   return (
     <div
       className="relative w-full md:w-1/2 2xl:w-1/3 hover:cursor-pointer overflow-hidden"
       style={{
         height: getPictureWidth(windowDimensions.width),
       }}
+      onClick={(_) => router.push(`/${proyecto.slug.current}`)}
     >
       <div className="relative w-full h-full transition-transform hover:scale-125 duration-500">
         <Image

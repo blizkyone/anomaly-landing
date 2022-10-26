@@ -1,12 +1,13 @@
 export default {
-  name: "banner",
-  title: "Banner",
+  name: "project",
+  title: "Project",
   type: "document",
   fields: [
     {
       name: "image",
       title: "Image",
-      type: "image",
+      type: "array",
+      of: [{ type: "image" }],
       options: {
         hotspot: true,
       },
@@ -17,9 +18,9 @@ export default {
       type: "string",
     },
     {
-      name: "punchline",
-      title: "Punchline",
-      type: "string",
+      name: "body",
+      title: "Body",
+      type: "text",
     },
     {
       name: "slug",
