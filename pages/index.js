@@ -120,12 +120,12 @@ export default function Home({ banners, landing }) {
       >
         <div
           ref={parent}
-          className="container mx-auto text-white flex justify-between items-center h-24 overflow-hidden"
+          className="container mx-auto text-white flex justify-between items-center h-14 lg:h-24 overflow-hidden"
         >
           <p
             ref={title}
-            className="font-bold relative -top-2 transition-colors hover:cursor-pointer"
-            style={{ fontSize: "126px", color: "transparent" }}
+            className="font-bold relative top-2 sm:-top-1 lg:-top-2 transition-colors hover:cursor-pointer text-5xl sm:text-7xl lg:text-9xl"
+            style={{ color: "transparent" }}
             onClick={(_) => {
               window.scrollTo({
                 top: 0,
@@ -136,7 +136,7 @@ export default function Home({ banners, landing }) {
             ANOMALY
           </p>
           <div
-            className="w-12 h-12 hover:cursor-pointer active:bg-white/20 rounded p-2"
+            className="w-12 h-12 hover:cursor-pointer active:bg-white/20 rounded p-2 mr-4"
             onClick={(_) =>
               window.open(
                 "https://www.instagram.com/anomaly_arquitectura",
@@ -203,10 +203,7 @@ export default function Home({ banners, landing }) {
           priority={true}
         />
         <div className="absolute top-0 z-10 h-screen w-full flex bg-black/70 items-end justify-end">
-          <h1
-            className="text-white text-center p-0 m-0 relative top-11 font-bold"
-            style={{ fontSize: "126px" }}
-          >
+          <h1 className="text-white text-center p-0 m-0 relative font-bold top-2 text-7xl sm:top-3 sm:text-9xl">
             ANOMALY
           </h1>
         </div>
