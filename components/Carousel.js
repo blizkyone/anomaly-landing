@@ -89,6 +89,7 @@ const Carousel = ({ images }) => {
       <div className="carousel-container flex w-full h-full overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x z-0">
         {images.map((image, index) => (
           <div
+            key={index}
             className={`carousel-item relative w-full h-full snap-start ${
               index != currentIndex && "hidden"
             }`}
