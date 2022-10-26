@@ -4,6 +4,7 @@ import Image from "next/image";
 import Proyectos from "../components/Proyectos";
 import { Loader } from "@googlemaps/js-api-loader";
 import { client } from "../lib/client";
+import { useNextSanityImage } from "next-sanity-image";
 
 const getPictureWidth = (width) => {
   if (width > 1440) {
@@ -34,6 +35,8 @@ export default function Home({ banners, landing }) {
   const googlemap = useRef();
 
   let map, google;
+
+  const imageProps = useNextSanityImage(client, landing[0].image);
 
   useEffect(() => {
     console.log(banners);
@@ -100,7 +103,7 @@ export default function Home({ banners, landing }) {
           <p
             ref={title}
             className="font-bold relative -top-2 transition-colors hover:cursor-pointer"
-            style={{ fontSize: "126px" }}
+            style={{ fontSize: "126px", color: "transparent" }}
             onClick={(_) => {
               window.scrollTo({
                 top: 0,
@@ -141,9 +144,10 @@ export default function Home({ banners, landing }) {
 
       <div className="relative h-screen w-full">
         <Image
-          alt="tulum"
+          {...imageProps}
+          alt="casa"
           className="z-0"
-          src="/main.jpg"
+          // src="/main.jpg"
           layout="fill"
           objectFit="cover"
           priority={true}
