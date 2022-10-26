@@ -3,13 +3,22 @@ import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { client } from "../lib/client";
 import { useRouter } from "next/router";
+import autoAnimate from "@formkit/auto-animate";
 
 const Carousel = ({ images }) => {
+  const [loading, setLoading] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
+  const main = useRef();
 
   useEffect(() => {
-    console.log(currentIndex);
+    main.current && autoAnimate(main.current);
+    router.events.on("routeChangeStart", (_) => setLoading(true));
+    router.events.on("routeChangeComplete", (_) => setLoading(false));
+    return () => {
+      router.events.off("routeChangeStart", (_) => setLoading(true));
+      router.events.off("routeChangeComplete", (_) => setLoading(false));
+    };
   }, [currentIndex]);
 
   const handleNext = () => {
@@ -23,7 +32,10 @@ const Carousel = ({ images }) => {
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full" ref={main}>
+      {loading && (
+        <div className="fixed top left w-screen h-screen bg-black/50 flex justify-center items-center text-center z-50"></div>
+      )}
       <div className="flex justify-between absolute top left w-full h-full">
         <div
           className="fixed top-2 left-2 bg-black/50 text-white hover:cursor-pointer hover:bg-black z-50 p-2 rounded"
@@ -33,7 +45,7 @@ const Carousel = ({ images }) => {
         </div>
         <button
           onClick={handleBack}
-          className="hover:bg-blue-900/75 text-white w-10 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
+          className="hover:bg-gray-900/75 text-white w-24 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
           // disabled={isDisabled("prev")}
         >
           <svg
@@ -54,7 +66,7 @@ const Carousel = ({ images }) => {
         </button>
         <button
           onClick={handleNext}
-          className="hover:bg-blue-900/75 text-white w-10 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
+          className="hover:bg-gray-900/75 text-white w-24 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
           // disabled={isDisabled("next")}
         >
           <svg
