@@ -4,10 +4,13 @@ import { useNextSanityImage } from "next-sanity-image";
 import { client } from "../lib/client";
 import { useRouter } from "next/router";
 import autoAnimate from "@formkit/auto-animate";
+import SanityImage from "./SanityImage";
 
 const Carousel = ({ images }) => {
   const [loading, setLoading] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [sanityImages, setSanityImages] = useState([]);
+
   const router = useRouter();
   const main = useRef();
 
@@ -87,25 +90,19 @@ const Carousel = ({ images }) => {
         </button>
       </div>
       <div className="carousel-container flex w-full h-full overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x z-0">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`carousel-item relative w-full h-full snap-start ${
-              index != currentIndex && "hidden"
-            }`}
-            // style={{ width: "1232px" }}
-          >
-            <Image
+        {images.map((image, index) => {
+          return (
+            <div
               key={index}
-              {...useNextSanityImage(client, image)}
-              alt="tulum"
-              className="z-0"
-              layout="fill"
-              objectFit="cover"
-              priority={true}
-            />
-          </div>
-        ))}
+              className={`carousel-item relative w-full h-full snap-start ${
+                index != currentIndex && "hidden"
+              }`}
+              // style={{ width: "1232px" }}
+            >
+              <SanityImage image={image} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
