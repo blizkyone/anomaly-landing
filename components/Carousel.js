@@ -13,8 +13,10 @@ const Carousel = ({ images }) => {
 
   const router = useRouter();
   const main = useRef();
+  const car = useRef();
 
   useEffect(() => {
+    console.log(car.current.scrollWidth / images.length);
     main.current && autoAnimate(main.current);
     router.events.on("routeChangeStart", (_) => setLoading(true));
     router.events.on("routeChangeComplete", (_) => setLoading(false));
@@ -28,10 +30,12 @@ const Carousel = ({ images }) => {
     setCurrentIndex((index) =>
       index === images.length - 1 ? index : index + 1
     );
+    // car.current.scrollLeft += car.current.scrollWidth / images.length;
   };
 
   const handleBack = () => {
     setCurrentIndex((index) => (index === 0 ? index : index - 1));
+    // car.current.scrollLeft -= car.current.scrollWidth / images.length;
   };
 
   return (
@@ -89,18 +93,22 @@ const Carousel = ({ images }) => {
           <span className="sr-only">Next</span>
         </button>
       </div>
-      <div className="carousel-container flex w-full h-full overflow-hidden scroll-smooth snap-x snap-mandatory touch-pan-x z-0">
+      <div
+        ref={car}
+        className="relative carousel-container flex w-full h-full overflow-x-auto scroll-smooth snap-x snap-mandatory touch-pan-x z-0"
+      >
         {images.map((image, index) => {
           return (
-            <div
+            <li
               key={index}
-              className={`carousel-item relative w-full h-full snap-start ${
-                index != currentIndex && "hidden"
+              className={`carousel-item absolute top-0 left-0 w-full h-full snap-start flex-shrink-0 transition-opacity duration-700 ${
+                index === currentIndex ? "opacity-100" : "opacity-0"
               }`}
+              // ${index === currentIndex && "hidden"}
               // style={{ width: "1232px" }}
             >
               <SanityImage image={image} />
-            </div>
+            </li>
           );
         })}
       </div>
